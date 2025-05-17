@@ -40,6 +40,7 @@ export class UserService {
   }
 
   async getIdentity(user: User, userWallet: any) {
+    console.log("userWallet", userWallet);
     const identity = await this.blockchainService.getOrCreateIdentity(userWallet.address, user);
     const identityFactoryAddress = this.ethereumService.getIdentityFactoryAddress();
     

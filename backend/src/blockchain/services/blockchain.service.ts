@@ -12,6 +12,7 @@ export class BlockchainService {
     ) {}
 
     async getOrCreateIdentity(userAddress: string, user: User): Promise<string> {
+        console.log("userAddress", userAddress);
         const identity = await this.ethereumService.getIdentity(userAddress)
         if (identity !== "0x0000000000000000000000000000000000000000") {
             return identity

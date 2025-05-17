@@ -36,8 +36,7 @@ export class PrivyGuard implements CanActivate {
             }
 
             const linkedAccounts = JSON.parse(decodedToken?.linked_accounts as string);
-            const userWallet = linkedAccounts.find((account: any) => account.type === 'wallet');
-
+            const userWallet = linkedAccounts.find((account: any) => (account.type === 'wallet') && (account.chain_type === 'ethereum'));
             const user = await this.userService.findOrCreateByDid(decodedToken.sub);
 
             if(!user) {

@@ -106,7 +106,9 @@ export class EthereumService {
         claimData?: string
     ) {
         const identity = this.getIdentityContract(identityAddress);
+        console.log("identity", identity);
         const tx = await identity.addClaim(claimId, claimData);
+        console.log("tx", tx);
         return await tx.wait();
     }
 
