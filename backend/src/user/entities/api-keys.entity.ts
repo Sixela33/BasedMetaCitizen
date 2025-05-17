@@ -13,6 +13,12 @@ export class ApiKeys {
     @Column({default: 'Unknown'})
     name: string
 
+    @Column('simple-array', { default: [] })
+    allowedOrigins: string[];
+
+    @Column('simple-array', { nullable: true })
+    redirectUrls: string[];
+
     @ManyToOne(() => User, user => user.apiKeys)
     user: User;
 }

@@ -4,6 +4,8 @@ import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { ApiKeys } from './entities/api-keys.entity';
 import * as jwt from 'jsonwebtoken';
+import { UpdateApiKeyDto, CreateApiKeyDto } from './dto/apiKey.dto';
+
 
 @Injectable()
 export class UserService {
@@ -29,41 +31,35 @@ export class UserService {
     return user;
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
-
   async findOne(id: string) {
     return this.UserRepo.findOne({
       where: { id: id },
     });
   }
 
-  async createApiKey(user: User): Promise<ApiKeys> {
+  async createApiKey(user: User, createApiKeyDto: CreateApiKeyDto): Promise<ApiKeys> {
     if (!user) {
         throw new BadRequestException('User not found');
     }
 
     // Generate a random string of 32 characters
-    console.log("user.id", user.id);
     let key = this.generateApiKey(user.id);
-    console.log("key", key);
     let existingKey = await this.apiKeysRepository.findOne({where: {key}});
-    console.log("existingKey", existingKey);
+
     // If the key already exists, generate a new one until it doesn't exist
     while (existingKey) {
       key = this.generateApiKey(user.id);
       existingKey = await this.apiKeysRepository.findOne({where: {key}});
     }
 
-    console.log("key", key);
-
     // Saving and returning the key
     const apiKey = this.apiKeysRepository.create({
         key,
         user: user,
+        name: createApiKeyDto.name,
+        allowedOrigins: createApiKeyDto.allowedOrigins,
+        redirectUrls: createApiKeyDto.redirectUrls || [],
     });
-    console.log("apiKey", apiKey);
 
     return await this.apiKeysRepository.save(apiKey);
   }
@@ -77,7 +73,23 @@ export class UserService {
   }
 
   async getApiKeys(user: User) {
-    return await this.apiKeysRepository.find({where: {user: user}});
+    const keys =  await this.apiKeysRepository.find({
+      where: {
+        user: {
+          id: user.id
+        }
+      }
+    });
+    return keys
+  }
+
+  async updateApiKey(user: User, id: string, updateApiKeyDto: UpdateApiKeyDto) {
+    const key = await this.apiKeysRepository.findOne({where: {id, user: user}});
+    if (!key) {
+      throw new BadRequestException('Key not found');
+    }
+    
+    return await this.apiKeysRepository.update(id, updateApiKeyDto);
   }
 
   async deleteApiKey(user: User, id: string) {
