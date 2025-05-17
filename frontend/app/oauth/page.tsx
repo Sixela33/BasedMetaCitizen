@@ -1,5 +1,4 @@
 'use client'
-
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { proxyAxois } from "../api/axios";
@@ -26,13 +25,12 @@ export default function OAuthPage() {
 
     async function getKycStatus() {
         const res = await proxyAxois.get('/sumsub/kyc-status');
-        console.log("res.data", res.data);
         setKycStatus(res.data);
-      }
+    }
     
-      useEffect(() => {
+    useEffect(() => {
         getKycStatus();
-      }, []);
+    }, [refreshKycFlag]);
 
     useEffect(() => {
         const fetchKeyData = async () => {
@@ -87,7 +85,11 @@ export default function OAuthPage() {
 
 
     if (!kycStatus || kycStatus?.list?.items?.length === 0) {
-        return <SumsubButton refreshKycFlag={refreshKycFlag} setRefreshKycFlag={setRefreshKycFlag}/>
+        return (
+            <div className="flex items-center justify-center min-h-[60vh] max-w-[400px]">
+                <SumsubButton refreshKycFlag={refreshKycFlag} setRefreshKycFlag={setRefreshKycFlag}/>
+            </div>
+        )
     }
 
     if (error || !keyData) {
