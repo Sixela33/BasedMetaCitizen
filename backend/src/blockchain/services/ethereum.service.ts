@@ -8,6 +8,7 @@ import ClaimManagerABI from '../../abis/ClaimManager.json';
 import TokenFactoryABI from '../../abis/TokenFactory.json';
 import TokenComplianceABI from '../../abis/TokenCompliance.json';
 import TokenABI from '../../abis/Token.json';
+
 import { IdentityService } from './Identity.service';
 import { DeployTokenDto } from '../dto/DeployToken.dto';
 

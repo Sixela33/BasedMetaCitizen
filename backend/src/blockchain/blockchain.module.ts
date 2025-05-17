@@ -6,12 +6,16 @@ import { Identity } from './entities/identity.entity';
 import { Wallet } from './entities/wallets.entity';
 import { IdentityService } from './services/Identity.service';
 import { BlockchainController } from './blockchain.controller';
+import { forwardRef } from '@nestjs/common';
 import { UserModule } from 'src/user/user.module';
 
 @Module({ 
-  imports: [TypeOrmModule.forFeature([Identity, Wallet]), UserModule],  
+  imports: [
+    TypeOrmModule.forFeature([Identity, Wallet]),
+    forwardRef(() => UserModule),
+  ],  
   providers: [EthereumService, BlockchainService, IdentityService],
-  exports: [EthereumService, BlockchainService],
+  exports: [EthereumService, BlockchainService, IdentityService],
   controllers: [BlockchainController],
 })
 export class BlockchainModule {}

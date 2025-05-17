@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
-import { ApiKeysService } from './apiKeys.service';
 import { Identity } from 'src/blockchain/entities/identity.entity';
+import { BlockchainService } from 'src/blockchain/services/blockchain.service';
 
 
 @Injectable()
@@ -13,7 +13,7 @@ export class UserService {
     private UserRepo: Repository<User>,
     @InjectRepository(Identity)
     private IdentityRepo: Repository<Identity>,
-    private readonly apiKeysService: ApiKeysService
+    private readonly blockchainService: BlockchainService
   ) {}
 
   async findOrCreateByDid(did: string) {
@@ -37,12 +37,9 @@ export class UserService {
     });
   }
 
-  async getIdentity(user: User) {
-    const identity = await this.IdentityRepo.findOne({
-      where: { user: { id: user.id } },
-    });
+  async getIdentity(user: User, userWallet: any) {
+    const identity = await this.blockchainService.getOrCreateIdentity(userWallet.address, user);
     
-    console.log("identity",identity);
     if (!identity) {
       throw new NotFoundException('Identity not found');
     }

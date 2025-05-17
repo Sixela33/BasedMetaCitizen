@@ -1,5 +1,4 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
-import { UserPayload } from "../types/userPayload.type";
 import { UserService } from "src/user/user.service";
 import * as jose from 'jose'
 
@@ -36,6 +35,9 @@ export class PrivyGuard implements CanActivate {
                 throw new UnauthorizedException('Invalid token subject');
             }
 
+            const linkedAccounts = JSON.parse(decodedToken?.linked_accounts as string);
+            const userWallet = linkedAccounts.find((account: any) => account.type === 'wallet');
+
             const user = await this.userService.findOrCreateByDid(decodedToken.sub);
 
             if(!user) {
@@ -43,6 +45,7 @@ export class PrivyGuard implements CanActivate {
             }
             
             // Set user payload
+            request.user_wallet = userWallet;
             request.user = user;
             return true;
         } catch (error) {

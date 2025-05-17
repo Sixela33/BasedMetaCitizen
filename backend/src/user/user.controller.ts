@@ -36,7 +36,7 @@ export class UserController {
   @UseGuards(PrivyGuard)
   @Get('identity')
   getIdentity(@Req() req) {
-    return this.userService.getIdentity(req.user);
+    return this.userService.getIdentity(req.user, req.user_wallet);
   }
 
   @UseGuards(PrivyGuard)

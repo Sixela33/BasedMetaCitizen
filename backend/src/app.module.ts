@@ -6,7 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SumsubModule } from './sumsub/sumsub.module';
 import { BlockchainModule } from './blockchain/blockchain.module';
-import { PrivyGuard } from './auth/guards/privy.guard';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -25,6 +25,6 @@ import { PrivyGuard } from './auth/guards/privy.guard';
     BlockchainModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrivyGuard],
+  providers: [AppService],
 })
 export class AppModule {}
