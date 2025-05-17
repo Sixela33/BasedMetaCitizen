@@ -41,6 +41,8 @@ export default function Choice({keyData, walletToLink}: {keyData: any, walletToL
                 walletToLink
             ]);
 
+            console.log("data", data);
+
             console.log("identityFactoryAddress", identityFactoryAddress);
             
             // Create the transaction

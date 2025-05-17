@@ -8,11 +8,14 @@ import Login from "./steps/Login";
 import Choice from "./steps/Choice";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import SumsubButton from "@/components/SumsubButton";
 
 export default function OAuthPage() {
     const [keyData, setKeyData] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [kycStatus, setKycStatus] = useState<any>(null);
+    const [refreshKycFlag, setRefreshKycFlag] = useState<boolean>(false);
 
     const {user} = usePrivy();
 
@@ -20,6 +23,16 @@ export default function OAuthPage() {
     const searchParams = useSearchParams();
     const apiKey = searchParams.get('apiKey');
     const walletToLink = searchParams.get('walletToLink');
+
+    async function getKycStatus() {
+        const res = await proxyAxois.get('/sumsub/kyc-status');
+        console.log("res.data", res.data);
+        setKycStatus(res.data);
+      }
+    
+      useEffect(() => {
+        getKycStatus();
+      }, []);
 
     useEffect(() => {
         const fetchKeyData = async () => {
@@ -70,6 +83,11 @@ export default function OAuthPage() {
                 </Card>
             </div>
         );
+    }
+
+
+    if (!kycStatus || kycStatus?.list?.items?.length === 0) {
+        return <SumsubButton refreshKycFlag={refreshKycFlag} setRefreshKycFlag={setRefreshKycFlag}/>
     }
 
     if (error || !keyData) {
