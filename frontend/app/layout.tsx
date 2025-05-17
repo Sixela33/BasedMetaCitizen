@@ -21,10 +21,10 @@ export default function RootLayout({
           {/* <NavBar/> */}
           <CustomSidebar/>
           <div className="flex flex-col w-full">
-          <SidebarTrigger/>
-          <div className="mt-16">
-            {children}
-          </div>
+            <SidebarTrigger/>
+            <div className="mt-16 mx-16">
+              {children}
+            </div>
           </div>
           <Toaster />
         </Providers>

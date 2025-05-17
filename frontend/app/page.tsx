@@ -11,7 +11,7 @@ export default function page() {
     <ProtectedRoute>
       <div className="flex flex-col w-full">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 mx-auto bg-gradient-to-b from-background to-muted">
+        <section className="w-full py-12 md:py-24 lg:py-32 mx-auto">
           <div className="container px-4 md:px-6 text-center mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-evenly w-full gap-8">
               <div className="w-full md:w-1/2">
