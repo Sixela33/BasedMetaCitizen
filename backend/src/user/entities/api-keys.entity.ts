@@ -16,8 +16,8 @@ export class ApiKeys {
     @Column('simple-array', { default: [] })
     allowedOrigins: string[];
 
-    @Column('simple-array', { nullable: true })
-    redirectUrls: string[];
+    @Column()
+    redirectUrl: string;
 
     @ManyToOne(() => User, user => user.apiKeys)
     user: User;

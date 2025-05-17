@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, JoinColumn } from "typeorm";
 import { User } from "../../user/entities/user.entity";
 import { Wallet } from "./wallets.entity";
 
@@ -7,7 +7,6 @@ export class Identity {
     @PrimaryGeneratedColumn()
     id: number;
     
-    
     @Column()
     address: string;
     
@@ -15,6 +14,7 @@ export class Identity {
     createdAt: Date;
     
     @OneToOne(() => User, (user) => user.identity)
+    @JoinColumn()
     user: User;
     
     @OneToMany(() => Wallet, (wallet) => wallet.identity)

@@ -1,33 +1,36 @@
-import type { Metadata } from "next";
+"use client"
 import "./globals.css";
 import Providers from "./Providers";
 import { Toaster } from "sonner";
 import CustomSidebar from "@/components/CustomSidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-export const metadata: Metadata = {
-  title: "Organizations | MetaCitizen",
-  description: "Create token factories, define compliance rules through claims, and build regulated digital markets. Empower your organization with programmable access control on-chain.",
-};
+import Metadata from "./metadata";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const pathname = usePathname();
+  const isOAuthRoute = pathname?.startsWith('/oauth');
+
   return (
     <html lang="en">
       <body>
-        <Providers>
-          {/* <NavBar/> */}
-          <CustomSidebar/>
+        <Metadata>
+          <Providers>
+            {!isOAuthRoute && <CustomSidebar/>}
           <div className="flex flex-col w-full">
-            <SidebarTrigger/>
-            <div className="mt-16 mx-16">
+            {!isOAuthRoute && <SidebarTrigger/>}
+            <div className={!isOAuthRoute ? "mt-16 mx-16" : ""}>
               {children}
             </div>
           </div>
           <Toaster />
         </Providers>
+        </Metadata>
       </body>
     </html>
   );

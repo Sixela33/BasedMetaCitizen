@@ -12,9 +12,8 @@ export class CreateApiKeyDto {
     @ArrayMinSize(1)
     allowedOrigins: string[];
 
-    @IsOptional()
-    @IsArray()
-    redirectUrls?: string[];
+    @IsString()
+    redirectUrl: string;
 }
 
 export class UpdateApiKeyDto extends PartialType(CreateApiKeyDto) {

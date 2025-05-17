@@ -17,7 +17,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 const apiKeyFormSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     allowedOrigins: z.array(z.string()).min(1, 'At least one origin is required'),
-    redirectUrls: z.array(z.string()).optional(),
+    redirectUrl: z.string(),
 })
 
 type ApiKeyFormValues = z.infer<typeof apiKeyFormSchema>
@@ -32,7 +32,7 @@ export default function ApiKeysPage() {
         defaultValues: {
             name: '',
             allowedOrigins: [''],
-            redirectUrls: [''],
+            redirectUrl: '',
         },
     })
 
@@ -55,7 +55,7 @@ export default function ApiKeysPage() {
             const response = await proxyAxois.post('/user/api-keys', {
                 name: values.name,
                 allowedOrigins: values.allowedOrigins.filter(Boolean),
-                redirectUrls: values.redirectUrls?.filter(Boolean),
+                redirectUrl: values.redirectUrl,
             })
             setApiKeys(prevKeys => [...prevKeys, response.data])
             setShowNewKeyForm(false)
@@ -100,13 +100,12 @@ export default function ApiKeysPage() {
     }
 
     const addRedirectUrlField = () => {
-        const currentUrls = form.getValues('redirectUrls') || []
-        form.setValue('redirectUrls', [...currentUrls, ''])
+        const currentUrls = form.getValues('redirectUrl') || ''
+        form.setValue('redirectUrl', currentUrls)
     }
 
-    const removeRedirectUrlField = (index: number) => {
-        const currentUrls = form.getValues('redirectUrls') || []
-        form.setValue('redirectUrls', currentUrls.filter((_, i) => i !== index))
+    const removeRedirectUrlField = () => {
+        form.setValue('redirectUrl', '')
     }
 
     useEffect(() => {
@@ -179,11 +178,10 @@ export default function ApiKeysPage() {
 
                                     <div className="space-y-4">
                                         <Label>Redirect URLs (Optional)</Label>
-                                        {(form.watch('redirectUrls') || []).map((_, index) => (
-                                            <div key={index} className="flex gap-2">
+                                        <div className="flex gap-2">
                                                 <FormField
                                                     control={form.control}
-                                                    name={`redirectUrls.${index}`}
+                                                    name={`redirectUrl`}
                                                     render={({ field }) => (
                                                         <FormItem className="flex-1">
                                                             <FormControl>
@@ -197,12 +195,11 @@ export default function ApiKeysPage() {
                                                     type="button"
                                                     variant="destructive"
                                                     size="icon"
-                                                    onClick={() => removeRedirectUrlField(index)}
+                                                    onClick={() => removeRedirectUrlField()}
                                                 >
                                                     <TrashIcon className="h-4 w-4" />
                                                 </Button>
-                                            </div>
-                                        ))}
+                                        </div>
                                         <Button type="button" variant="outline" onClick={addRedirectUrlField} className="w-full">
                                             <PlusIcon className="h-4 w-4 mr-2" /> Add Redirect URL
                                         </Button>
