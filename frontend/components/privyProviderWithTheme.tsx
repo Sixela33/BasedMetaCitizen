@@ -8,7 +8,8 @@ const privyConfig: PrivyClientConfig = {
   defaultChain: baseSepolia,
   supportedChains: [baseSepolia],
   embeddedWallets: {
-    createOnLogin: 'users-without-wallets'
+    createOnLogin: 'users-without-wallets',
+    showWalletUIs: true
   }
 };
 

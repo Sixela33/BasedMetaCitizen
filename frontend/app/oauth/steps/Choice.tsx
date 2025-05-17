@@ -3,11 +3,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import React from 'react'
 import IdentityFactory from '@/lib/abis/IdentityFactory.json'
-import { useSignTransaction } from '@privy-io/react-auth';
+import { usePrivy, useSignTransaction } from '@privy-io/react-auth';
+import { ethers } from 'ethers';
 
 
-export default function Choice({keyData}: {keyData: any}) {
-
+export default function Choice({keyData, walletToLink}: {keyData: any, walletToLink: string}) {    
     const {signTransaction} = useSignTransaction()
 
     function navigateToRedirectUrl() {
@@ -19,15 +19,44 @@ export default function Choice({keyData}: {keyData: any}) {
     async function fetchUserIdentity() {
         const response = await proxyAxois.get(`/user/identity`);
         console.log("user identity",response.data);
-        const {userIdentity, IdentityFactory} = response.data;
-        return {userIdentity, IdentityFactory};
+        const {identity, identityFactoryAddress} = response.data;
+        return {identity, identityFactoryAddress};
     }
 
     async function allowAccess() {
-        const {userIdentity, IdentityFactory} = await fetchUserIdentity();
-        console.log("user identity",userIdentity);
-        //navigateToRedirectUrl();
-        // 
+        const {identity, identityFactoryAddress} = await fetchUserIdentity();
+        console.log("user identity", {
+            identity,
+            identityFactoryAddress,
+            walletToLink
+        });
+        
+        try {
+            // Create contract interface for the transaction
+            const factoryInterface = new ethers.Interface(IdentityFactory.abi);
+            
+            // Encode the function call
+            const data = factoryInterface.encodeFunctionData("linkWallet", [
+                identity,
+                walletToLink
+            ]);
+            
+            // Create the transaction
+            const transaction = {
+                to: identityFactoryAddress,
+                data: data,
+            };
+            
+            // Sign and send the transaction
+            const signedTx = await signTransaction(transaction);
+            console.log("Transaction signed:", signedTx);
+            
+            // After successful linking, navigate to redirect URL
+            navigateToRedirectUrl();
+        } catch (error) {
+            console.error("Error linking wallet:", error);
+            // Handle error appropriately
+        }
     }
 
     function denyAccess() {

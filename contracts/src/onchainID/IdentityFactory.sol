@@ -30,7 +30,7 @@ contract IdentityFactory is IIdentityFactory, AccessControl {
         Identity _identity = Identity(identity);
         require(address(identity) != address(0), "IdentityFactory: Identity does not exist");
 
-        require(_identity.hasRole(_identity.IDENTITY_ADMIN(), wallet), "IdentityFactory: Wallet must have IDENTITY_ADMIN role");
+        require(_identity.hasRole(_identity.IDENTITY_ADMIN(), msg.sender), "IdentityFactory: Wallet must have IDENTITY_ADMIN role");
 
         identityByUser[wallet] = address(identity);
     }

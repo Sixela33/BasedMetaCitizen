@@ -17,6 +17,9 @@ export default function OAuthPage() {
     // get the api key from the url
     const searchParams = useSearchParams();
     const apiKey = searchParams.get('apiKey');
+    const walletToLink = searchParams.get('walletToLink');
+
+    console.log("walletToLink", walletToLink);
 
     useEffect(() => {
         const fetchKeyData = async () => {
@@ -37,10 +40,16 @@ export default function OAuthPage() {
         fetchKeyData();
     }, []);
     
+
+    if (!walletToLink) {
+        return <div>Invalid url parameters</div>
+    }
+
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+
     if (!keyData) {
-        if (isLoading) {
-            return <div>Loading...</div>
-        }
         return <div>Invalid Key</div>
     }
 
@@ -49,6 +58,6 @@ export default function OAuthPage() {
     }
 
     return (
-       <Choice keyData={keyData} />
+       <Choice keyData={keyData} walletToLink={walletToLink} />
     )
 }

@@ -77,6 +77,7 @@ contract IdentityFactoryTest is Test {
         address identityAddress = identityFactory.getIdentity(user);
         
         address newWallet = address(4);
+        vm.startPrank(newWallet);
         // Trying to link a wallet that doesn't have IDENTITY_ADMIN role should fail
         vm.expectRevert("IdentityFactory: Wallet must have IDENTITY_ADMIN role");
         identityFactory.linkWallet(identityAddress, newWallet);
