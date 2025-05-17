@@ -15,3 +15,7 @@ cp ./out/ClaimManager.sol/ClaimManager.json ../backend/src/abis/ClaimManager.jso
 cp ./out/TokenCompliance.sol/TokenCompliance.json ../backend/src/abis/TokenCompliance.json
 cp ./out/Token.sol/Token.json ../backend/src/abis/Token.json
 cp ./out/TokenFactory.sol/TokenFactory.json ../backend/src/abis/TokenFactory.json
+
+# Copy the abis to the demo frontend
+cp ./out/IdentityFactory.sol/IdentityFactory.json ../demoApp/frontend/src/abis/IdentityFactory.json
+

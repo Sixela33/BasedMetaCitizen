@@ -40,6 +40,8 @@ export default function Choice({keyData, walletToLink}: {keyData: any, walletToL
                 identity,
                 walletToLink
             ]);
+
+            console.log("identityFactoryAddress", identityFactoryAddress);
             
             // Create the transaction
             const transaction = {
@@ -49,6 +51,9 @@ export default function Choice({keyData, walletToLink}: {keyData: any, walletToL
             
             // Sign and send the transaction
             const signedTx = await signTransaction(transaction);
+
+            console.log("signedTx", signedTx);
+
             console.log("Transaction signed:", signedTx);
             
             // After successful linking, navigate to redirect URL
