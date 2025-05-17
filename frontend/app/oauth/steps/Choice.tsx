@@ -84,6 +84,10 @@ export default function Choice({keyData, walletToLink}: {keyData: any, walletToL
                                 <li>Request identity verifications</li>
                             </ul>
                         </div>
+                            <div className='flex flex-col gap-2'>
+                                <p className='text-sm text-muted-foreground'>You are going to link <span className='font-bold'>{walletToLink}</span> to your identity</p>
+                                <p className='text-sm text-muted-foreground text-red-500'>This will allow this wallet to operate in your name</p>
+                            </div>
                         
                         {error && (
                             <Alert variant="destructive">
