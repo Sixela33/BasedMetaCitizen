@@ -47,6 +47,10 @@ export class EthereumService {
 
     }
 
+    getIdentityFactoryAddress() {
+        return this.identityFactoryAddress;
+    }
+
     // Get contract instances with managed signer
     private getIdentityFactoryContract() {
         return new ethers.Contract(this.identityFactoryAddress, IdentityFactoryABI.abi, this.managedSigner);

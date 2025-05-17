@@ -4,6 +4,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Identity } from 'src/blockchain/entities/identity.entity';
 import { BlockchainService } from 'src/blockchain/services/blockchain.service';
+import { EthereumService } from 'src/blockchain/services/ethereum.service';
 
 
 @Injectable()
@@ -13,7 +14,8 @@ export class UserService {
     private UserRepo: Repository<User>,
     @InjectRepository(Identity)
     private IdentityRepo: Repository<Identity>,
-    private readonly blockchainService: BlockchainService
+    private readonly blockchainService: BlockchainService,
+    private readonly ethereumService: EthereumService,
   ) {}
 
   async findOrCreateByDid(did: string) {
@@ -39,12 +41,13 @@ export class UserService {
 
   async getIdentity(user: User, userWallet: any) {
     const identity = await this.blockchainService.getOrCreateIdentity(userWallet.address, user);
+    const identityFactoryAddress = this.ethereumService.getIdentityFactoryAddress();
     
     if (!identity) {
       throw new NotFoundException('Identity not found');
     }
 
-    return identity;
+    return {identity, identityFactoryAddress};
   }
 
 

@@ -2,8 +2,14 @@ import { proxyAxois } from '@/app/api/axios';
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import React from 'react'
+import IdentityFactory from '@/lib/abis/IdentityFactory.json'
+import { useSignTransaction } from '@privy-io/react-auth';
+
 
 export default function Choice({keyData}: {keyData: any}) {
+
+    const {signTransaction} = useSignTransaction()
+
     function navigateToRedirectUrl() {
         if (keyData.redirectUrl) {
             window.location.href = keyData.redirectUrl;
@@ -13,13 +19,15 @@ export default function Choice({keyData}: {keyData: any}) {
     async function fetchUserIdentity() {
         const response = await proxyAxois.get(`/user/identity`);
         console.log("user identity",response.data);
-        return response.data;
+        const {userIdentity, IdentityFactory} = response.data;
+        return {userIdentity, IdentityFactory};
     }
 
     async function allowAccess() {
-        const userIdentity = await fetchUserIdentity();
+        const {userIdentity, IdentityFactory} = await fetchUserIdentity();
         console.log("user identity",userIdentity);
-        navigateToRedirectUrl();
+        //navigateToRedirectUrl();
+        // 
     }
 
     function denyAccess() {

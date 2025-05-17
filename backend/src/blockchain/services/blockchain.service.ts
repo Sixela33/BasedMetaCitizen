@@ -16,9 +16,14 @@ export class BlockchainService {
         if (identity !== "0x0000000000000000000000000000000000000000") {
             return identity
         }
+        console.log("identity",identity)
         const newIdentity = await this.ethereumService.createIdentity(userAddress)
-        await this.identityService.createIdentity(user, newIdentity)
+        console.log("newIdentity",newIdentity)
+        const dbIdentity = await this.identityService.createIdentity(user, newIdentity)
+        console.log("dbIdentity",dbIdentity)
+
         await this.ethereumService.addClaim(newIdentity, 1, undefined)
+        console.log("newIdentity",newIdentity)
         return newIdentity
     }
 
