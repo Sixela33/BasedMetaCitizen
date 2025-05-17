@@ -23,8 +23,8 @@ export class BlockchainService {
         const dbIdentity = await this.identityService.createIdentity(user, newIdentity)
         console.log("dbIdentity",dbIdentity)
 
-        await this.ethereumService.addClaim(newIdentity, 1, undefined)
-        console.log("newIdentity",newIdentity)
+        //await this.ethereumService.addClaim(newIdentity, 1, undefined)
+        //console.log("newIdentity",newIdentity)
         return newIdentity
     }
 

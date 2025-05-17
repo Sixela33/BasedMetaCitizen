@@ -1,14 +1,17 @@
 import { proxyAxois } from '@/app/api/axios';
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import React from 'react'
-import IdentityFactory from '@/lib/abis/IdentityFactory.json'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import React, { useState } from 'react';
+import IdentityFactory from '@/lib/abis/IdentityFactory.json';
 import { usePrivy, useSignTransaction } from '@privy-io/react-auth';
 import { ethers } from 'ethers';
-
+import { Loader2 } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function Choice({keyData, walletToLink}: {keyData: any, walletToLink: string}) {    
-    const {signTransaction} = useSignTransaction()
+    const {signTransaction} = useSignTransaction();
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     function navigateToRedirectUrl() {
         if (keyData.redirectUrl) {
@@ -18,20 +21,17 @@ export default function Choice({keyData, walletToLink}: {keyData: any, walletToL
 
     async function fetchUserIdentity() {
         const response = await proxyAxois.get(`/user/identity`);
-        console.log("user identity",response.data);
         const {identity, identityFactoryAddress} = response.data;
         return {identity, identityFactoryAddress};
     }
 
     async function allowAccess() {
-        const {identity, identityFactoryAddress} = await fetchUserIdentity();
-        console.log("user identity", {
-            identity,
-            identityFactoryAddress,
-            walletToLink
-        });
+        setIsProcessing(true);
+        setError(null);
         
         try {
+            const {identity, identityFactoryAddress} = await fetchUserIdentity();
+            
             // Create contract interface for the transaction
             const factoryInterface = new ethers.Interface(IdentityFactory.abi);
             
@@ -53,9 +53,11 @@ export default function Choice({keyData, walletToLink}: {keyData: any, walletToL
             
             // After successful linking, navigate to redirect URL
             navigateToRedirectUrl();
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error linking wallet:", error);
-            // Handle error appropriately
+            setError(error.message || "Failed to link wallet. Please try again.");
+        } finally {
+            setIsProcessing(false);
         }
     }
 
@@ -63,23 +65,57 @@ export default function Choice({keyData, walletToLink}: {keyData: any, walletToL
         navigateToRedirectUrl();
     }
 
-  return (
-    <div className="flex flex-col gap-4 text-center mx-auto w-1/2 mt-16">
-    <Card>
-        <CardHeader>
-            <CardTitle>{keyData.name}</CardTitle>
-            <CardDescription>Is requesting access to your Identity</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <p>Allow access?</p>
-            <div className="flex gap-2 mx-auto items-center justify-center mt-4">
-                <div className="flex gap-2">
-                    <Button variant="outline" onClick={denyAccess}>Deny</Button>
-                    <Button onClick={allowAccess}>Allow</Button>
-                </div>
+    return (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+            <Card className="w-full max-w-[500px]">
+                <CardHeader className="text-center">
+                    <CardTitle className="text-2xl mb-2">{keyData.name}</CardTitle>
+                    <CardDescription className="text-lg">
+                        Requesting Access to Your Identity
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        <div className="bg-muted p-4 rounded-lg">
+                            <p className="font-medium mb-2">This application will be able to:</p>
+                            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                                <li>Link to your MetaCitizen identity</li>
+                                <li>View your basic profile information</li>
+                                <li>Request identity verifications</li>
+                            </ul>
+                        </div>
+                        
+                        {error && (
+                            <Alert variant="destructive">
+                                <AlertTitle>Error</AlertTitle>
+                                <AlertDescription>{error}</AlertDescription>
+                            </Alert>
+                        )}
+                    </div>
+                </CardContent>
+                <CardFooter className="flex justify-center gap-3">
+                    <Button
+                        variant="outline"
+                        onClick={denyAccess}
+                        disabled={isProcessing}
+                    >
+                        Deny
+                    </Button>
+                    <Button
+                        onClick={allowAccess}
+                        disabled={isProcessing}
+                    >
+                        {isProcessing ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Authorizing...
+                            </>
+                        ) : (
+                            'Allow Access'
+                        )}
+                    </Button>
+                </CardFooter>
+            </Card>
         </div>
-        </CardContent>
-    </Card>
-</div>
-  )
+    );
 }
