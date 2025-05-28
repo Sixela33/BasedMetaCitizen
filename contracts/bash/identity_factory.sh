@@ -3,6 +3,8 @@ forge build --via-ir
 
 
 # Copy the abis to the frontend
+
+
 cp ./out/IdentityFactory.sol/IdentityFactory.json ../frontend/lib/abis/IdentityFactory.json
 cp ./out/Identity.sol/Identity.json ../frontend/lib/abis/Identity.json
 cp ./out/ClaimManager.sol/ClaimManager.json ../frontend/lib/abis/ClaimManager.json
@@ -17,5 +19,5 @@ cp ./out/Token.sol/Token.json ../backend/src/abis/Token.json
 cp ./out/TokenFactory.sol/TokenFactory.json ../backend/src/abis/TokenFactory.json
 
 # Copy the abis to the demo frontend
-cp ./out/IdentityFactory.sol/IdentityFactory.json ../demoApp/frontend/src/abis/IdentityFactory.json
+# cp ./out/IdentityFactory.sol/IdentityFactory.json ../demoApp/frontend/src/abis/IdentityFactory.json
 
