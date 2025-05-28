@@ -14,22 +14,32 @@ export default function RootLayout({
 }>) {
 
   const pathname = usePathname();
-  const isOAuthRoute = pathname?.startsWith('/oauth');
+  const isOAuthRoute = pathname?.startsWith('/oauth') || pathname?.startsWith('/login') || pathname?.startsWith('/signup');
 
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning className="dark">
+      <body className="bg-black text-cyan-400 min-h-screen">
         <Metadata>
           <Providers>
-            {!isOAuthRoute && <CustomSidebar/>}
-          <div className="flex flex-col w-full">
-            {!isOAuthRoute && <SidebarTrigger/>}
-            <div className={!isOAuthRoute ? "mt-16 mx-16" : ""}>
-              {children}
+            <div className="flex min-h-screen w-full bg-black">
+              {!isOAuthRoute && (
+                <div className="relative">
+                  <CustomSidebar/>
+                </div>
+              )}
+              <div className="flex flex-col w-full relative">
+                {!isOAuthRoute && (
+                  <div className="sticky top-0 z-50 border-b border-cyan-500/30 bg-black/80 backdrop-blur-md p-4">
+                    <SidebarTrigger className="text-cyan-400 hover:text-cyan-300" />
+                  </div>
+                )}
+                <div className={!isOAuthRoute ? "flex-1 w-full" : "min-h-screen"}>
+                  {children}
+                </div>
+              </div>
             </div>
-          </div>
-          <Toaster />
-        </Providers>
+            <Toaster />
+          </Providers>
         </Metadata>
       </body>
     </html>

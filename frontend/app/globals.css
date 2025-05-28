@@ -4,6 +4,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glow {
+    text-shadow: 0 0 5px #22d3ee, 0 0 10px #22d3ee, 0 0 15px #22d3ee;
+  }
+  
+  .matrix-rain {
+    background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22%2300ffff%22%20fill-opacity%3D%220.1%22%3E%3Ctext%20x%3D%225%22%20y%3D%2215%22%20font-family%3D%22monospace%22%20font-size%3D%2210%22%3E1%3C/text%3E%3Ctext%20x%3D%2215%22%20y%3D%225%22%20font-family%3D%22monospace%22%20font-size%3D%2210%22%3E0%3C/text%3E%3C/g%3E%3C/svg%3E');
+    animation: matrix-fall 20s linear infinite;
+  }
+  
+  @keyframes matrix-fall {
+    0% { background-position: 0 -100%; }
+    100% { background-position: 0 100%; }
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -46,74 +70,76 @@
 }
 
 :root {
-  --background: oklch(0.98 0.02 240);
-  --foreground: oklch(0.2 0.05 240);
-  --card: oklch(1 0.01 240);
-  --card-foreground: oklch(0.2 0.05 240);
-  --popover: oklch(1 0.01 240);
-  --popover-foreground: oklch(0.2 0.05 240);
-  --primary: oklch(0.5 0.2 240);
-  --primary-foreground: oklch(0.98 0.01 240);
-  --secondary: oklch(0.95 0.05 240);
-  --secondary-foreground: oklch(0.3 0.1 240);
-  --muted: oklch(0.95 0.03 240);
-  --muted-foreground: oklch(0.5 0.05 240);
-  --accent: oklch(0.9 0.1 220);
-  --accent-foreground: oklch(0.2 0.1 240);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: oklch(0.85 0.05 240);
-  --input: oklch(0.85 0.05 240);
-  --ring: oklch(0.6 0.15 240);
-  --chart-1: oklch(0.65 0.22 240);
-  --chart-2: oklch(0.6 0.18 210);
-  --chart-3: oklch(0.55 0.15 260);
-  --chart-4: oklch(0.7 0.2 225);
-  --chart-5: oklch(0.75 0.18 195);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.97 0.03 240);
-  --sidebar-foreground: oklch(0.2 0.05 240);
-  --sidebar-primary: oklch(0.5 0.2 240);
-  --sidebar-primary-foreground: oklch(0.98 0.01 240);
-  --sidebar-accent: oklch(0.9 0.1 220);
-  --sidebar-accent-foreground: oklch(0.2 0.1 240);
-  --sidebar-border: oklch(0.85 0.05 240);
-  --sidebar-ring: oklch(0.6 0.15 240);
+  /* Cyberpunk Dark Theme Colors */
+  --background: 0 0% 0%; /* Pure black background */
+  --foreground: 180 100% 75%; /* Cyan foreground */
+  --card: 0 0% 3.9%; /* Very dark card background */
+  --card-foreground: 180 100% 75%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 180 100% 75%;
+  --primary: 180 100% 50%; /* Bright cyan primary */
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 14.9%; /* Dark secondary */
+  --secondary-foreground: 180 100% 75%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 180 50% 65%;
+  --accent: 180 100% 50%;
+  --accent-foreground: 0 0% 0%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 180 100% 30%; /* Cyan borders */
+  --input: 0 0% 14.9%;
+  --ring: 180 100% 50%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+  --radius: 0.5rem;
+  --sidebar: 0 0% 3.9%; /* Dark sidebar */
+  --sidebar-foreground: 180 100% 75%;
+  --sidebar-primary: 180 100% 50%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 0 0% 14.9%;
+  --sidebar-accent-foreground: 180 100% 75%;
+  --sidebar-border: 180 100% 30%;
+  --sidebar-ring: 180 100% 50%;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Same dark theme colors for consistency */
+  --background: 0 0% 0%;
+  --foreground: 180 100% 75%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 180 100% 75%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 180 100% 75%;
+  --primary: 180 100% 50%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 180 100% 75%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 180 50% 65%;
+  --accent: 180 100% 50%;
+  --accent-foreground: 0 0% 0%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 180 100% 30%;
+  --input: 0 0% 14.9%;
+  --ring: 180 100% 50%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+  --sidebar: 0 0% 3.9%;
+  --sidebar-foreground: 180 100% 75%;
+  --sidebar-primary: 180 100% 50%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 0 0% 14.9%;
+  --sidebar-accent-foreground: 180 100% 75%;
+  --sidebar-border: 180 100% 30%;
+  --sidebar-ring: 180 100% 50%;
 }
 
 @layer base {
@@ -122,5 +148,29 @@
   }
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(to bottom, black, #0a0a0a, black);
+    min-height: 100vh;
   }
+}
+
+/* Cyberpunk grid overlay */
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Glowing effects */
+.cyber-glow {
+  box-shadow: 
+    0 0 5px rgba(34, 211, 238, 0.5),
+    0 0 10px rgba(34, 211, 238, 0.3),
+    0 0 15px rgba(34, 211, 238, 0.1);
+}
+
+.cyber-border {
+  border: 1px solid rgba(34, 211, 238, 0.5);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
 }
