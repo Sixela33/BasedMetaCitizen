@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import SumsubWebSdk from '@sumsub/websdk-react'
 import { proxyAxois } from '@/app/api/axios';
 
@@ -7,7 +7,6 @@ import { proxyAxois } from '@/app/api/axios';
 export default function SumsubButton({ refreshKycFlag, setRefreshKycFlag}: {refreshKycFlag: boolean, setRefreshKycFlag: (refreshKycFlag: boolean) => void}) {
   const [accessToken, setAccessToken] = useState('');
   const [showVerification, setShowVerification] = useState(false);
-  const [kycStatus, setKycStatus] = useState<any>(null);
 
   const config = {
     lang: 'en',
@@ -79,7 +78,10 @@ export default function SumsubButton({ refreshKycFlag, setRefreshKycFlag}: {refr
           />}
         </div>
       )}
-      {kycStatus && kycStatus.list && kycStatus.list.items && kycStatus.list.items.length > 0 && (
+      {
+      /**
+       * 
+      kycStatus && kycStatus.list && kycStatus.list.items && kycStatus.list.items.length > 0 && (
             <div className="p-4 border rounded-lg max-w-md">
               <h3 className="text-lg font-bold mb-3">KYC Information</h3>
               
@@ -110,7 +112,10 @@ export default function SumsubButton({ refreshKycFlag, setRefreshKycFlag}: {refr
                 </div>
               )}
             </div>
-          )}
+            
+          )
+          */
+          }
     </div>
   )
 }

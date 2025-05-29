@@ -1,9 +1,7 @@
 import React from 'react'
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, CheckCircle, Building, Users, Database, Eye, Code, Shield } from "lucide-react";
+import { ArrowRight, Building } from "lucide-react";
 import Link from 'next/link';
 
 export default function page() {
@@ -41,7 +39,7 @@ export default function page() {
                   <div className="h-1 w-32 bg-gradient-to-r from-cyan-500 to-transparent animate-pulse" />
                 </div>
                 <p className="max-w-[600px] text-lg text-cyan-200/80 font-mono leading-relaxed">
-                  {">"} Manage your organization's digital identity
+                  {">"} Manage your organization&apos;s digital identity
                   <br />
                   {">"} Control API keys and access permissions
                   <br />

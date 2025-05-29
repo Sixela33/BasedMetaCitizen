@@ -6,6 +6,8 @@ import CustomSidebar from "@/components/CustomSidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Metadata from "./metadata";
 import { usePathname } from "next/navigation";
+import { Suspense } from "react";
+import Loading from "@/components/Loading";
 
 export default function RootLayout({
   children,
@@ -21,7 +23,7 @@ export default function RootLayout({
       <body className="bg-black text-cyan-400 min-h-screen">
         <Metadata>
           <Providers>
-            <div className="flex min-h-screen w-full bg-black">
+              <div className="flex min-h-screen w-full bg-black">
               {!isOAuthRoute && (
                 <div className="relative">
                   <CustomSidebar/>
@@ -33,9 +35,11 @@ export default function RootLayout({
                     <SidebarTrigger className="text-cyan-400 hover:text-cyan-300" />
                   </div>
                 )}
+                <Suspense fallback={<Loading />}>
                 <div className={!isOAuthRoute ? "flex-1 w-full" : "min-h-screen"}>
                   {children}
                 </div>
+                </Suspense>
               </div>
             </div>
             <Toaster />

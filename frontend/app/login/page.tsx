@@ -4,9 +4,9 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogIn, Shield, Zap, Lock, Fingerprint, Cpu } from 'lucide-react';
+import { LogIn, Shield, Zap } from 'lucide-react';
 
-export default function page() {
+export default function Page() {
     const {authenticated, login} = usePrivy();
     const router = useRouter();
 

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import React, { useState } from 'react';
 import IdentityFactory from '@/lib/abis/IdentityFactory.json';
-import { usePrivy, useSignTransaction } from '@privy-io/react-auth';
+import { useSignTransaction } from '@privy-io/react-auth';
 import { ethers } from 'ethers';
 import { Loader2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

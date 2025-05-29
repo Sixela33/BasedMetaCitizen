@@ -1,5 +1,5 @@
 "use client"
-import { Home, Building, Plus, LogOut, Key, Database, Monitor } from 'lucide-react'
+import { Building, Key, Monitor } from 'lucide-react'
 import React from 'react'
 import { Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenuItem, SidebarFooter, SidebarMenuButton, SidebarGroupContent, SidebarMenu } from './ui/sidebar';
 import { useRouter } from 'next/navigation';

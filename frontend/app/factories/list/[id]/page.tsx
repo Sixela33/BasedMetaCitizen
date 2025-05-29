@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/carousel";
 import axios from 'axios';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import Image from 'next/image';
 
 interface Token {
     address: string;
@@ -239,7 +240,7 @@ export default function TokenList() {
                                                         <CarouselContent>
                                                             {tokenImages[token.id].map((img, index) => (
                                                                 <CarouselItem key={index}>
-                                                                    <img 
+                                                                    <Image 
                                                                         src={'https://ipfs.io/ipfs/' + img} 
                                                                         alt={`${token.name} image ${index+1}`}
                                                                         className="w-full h-48 object-cover rounded-lg border border-cyan-500/30"

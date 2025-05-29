@@ -1,7 +1,6 @@
 'use client'
 import { usePrivy } from '@privy-io/react-auth';
 import React from 'react'
-import { toast } from 'sonner';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { Card } from './ui/card';
@@ -20,15 +19,19 @@ const navbarItems = [
   ]
 
 export default function NavBar() {
-    const {authenticated, login, logout, user} = usePrivy();
+    const {authenticated, login, logout} = usePrivy();
 
+   
+    /**
     const smartWallet = user?.linkedAccounts.find((account) => account.type === 'smart_wallet');
     const userAddress = smartWallet?.address;
     
+     * 
     function copyAddress() {
-        navigator.clipboard.writeText(userAddress || "")
-        toast.success("Address copied to clipboard")
-      }
+      navigator.clipboard.writeText(userAddress || "")
+      toast.success("Address copied to clipboard")
+    }
+    */
 
   return (
     <Card className="flex flex-row w-full bg-card py-3 px-4 border-0 items-center justify-between gap-6 rounded-2xl mt-5">

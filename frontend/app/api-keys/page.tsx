@@ -86,6 +86,7 @@ export default function ApiKeysPage() {
             toast.success('API key copied to clipboard');
         }).catch(err => {
             toast.error('Failed to copy API key');
+            console.error('Failed to copy API key:', err);
         });
     }
 
@@ -97,11 +98,6 @@ export default function ApiKeysPage() {
     const removeOriginField = (index: number) => {
         const currentOrigins = form.getValues('allowedOrigins')
         form.setValue('allowedOrigins', currentOrigins.filter((_, i) => i !== index))
-    }
-
-    const addRedirectUrlField = () => {
-        const currentUrls = form.getValues('redirectUrl') || ''
-        form.setValue('redirectUrl', currentUrls)
     }
 
     const removeRedirectUrlField = () => {

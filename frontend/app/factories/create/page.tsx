@@ -13,7 +13,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { usePrivy } from '@privy-io/react-auth';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { Building, Shield, Settings, Zap } from 'lucide-react';
 
@@ -74,7 +73,6 @@ const factoryFormSchema = z.object({
 export default function CreateFactory() {
   const [loading, setLoading] = React.useState(false);
   const [factoryCreated, setFactoryCreated] = React.useState<Factory | null>(null);
-  const { authenticated, ready } = usePrivy();
 
   const form = useForm<FactoryFormData>({
     resolver: zodResolver(factoryFormSchema),
