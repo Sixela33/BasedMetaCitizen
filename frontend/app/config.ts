@@ -1,8 +1,8 @@
 import { PinataSDK } from "pinata-web3"
 
 const getApiUrl = () => {
-  if (process.env.NODE_ENV === 'production') {
-    return 'https://api.metacitizen.com.ar';
+  if(process.env.BACKEND_URL) {
+    return process.env.NEXT_PUBLIC_BACKEND_URL;
   }
   return 'http://localhost:8000';
 }

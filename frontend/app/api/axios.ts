@@ -7,7 +7,6 @@ export const proxyAxois = axios.create({
     baseURL: config.apiUrl,
     withCredentials: true,
     headers: {
-        'Content-Type': 'application/json',
-        'X-Frontend-Type': 'orgs'
+        'Content-Type': 'application/json'
     }
 })

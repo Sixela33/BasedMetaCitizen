@@ -1,13 +1,8 @@
-# 🌐 MetaCitizen
+# 🌐 MetaCitizen (BasedMetaCitizen)
 
 **A Decentralized Identity Platform for Compliant DeFi Interactions**
 
 MetaCitizen is an innovative on-chain identity platform that enables decentralized protocols to distinguish between real users while maintaining privacy and compliance. Built to combat money laundering and enable compliant interactions in the DeFi ecosystem, MetaCitizen provides a robust foundation for identity verification without compromising user privacy.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Built with Foundry](https://img.shields.io/badge/Built%20with-Foundry-FFDB1C.svg)](https://getfoundry.sh/)
-[![Powered by Next.js](https://img.shields.io/badge/Powered%20by-Next.js-000000.svg)](https://nextjs.org/)
-[![NestJS Backend](https://img.shields.io/badge/Backend-NestJS-E0234E.svg)](https://nestjs.com/)
 
 ## 🎯 Features
 
@@ -32,6 +27,13 @@ MetaCitizen is an innovative on-chain identity platform that enables decentraliz
 - **KYC Integration**: Seamless integration with KYC providers like SumSub
 
 ## 🏗️ Architecture
+
+### Tech Stack
+- **Frontend**: Next.js 15 with React 19, TailwindCSS, and Privy authentication
+- **Backend**: NestJS with TypeORM, PostgreSQL, and JWT authentication
+- **Database**: PostgreSQL 16
+- **Smart Contracts**: Solidity with Foundry framework
+- **Deployment**: Docker & Docker Compose
 
 ```mermaid
 graph TB
@@ -75,6 +77,110 @@ graph TB
     H --> I
     J --> K
     G --> N
+```
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Docker & Docker Compose
+- Node.js 20+ (for development)
+- pnpm (package manager)
+- PostgreSQL
+- Foundry (for smart contracts)
+
+### Production Deployment
+
+1. **Clone and navigate to the project:**
+   ```bash
+   git clone <repository-url>
+   cd BasedMetaCitizen
+   ```
+
+2. **Deploy with Docker:**
+   ```bash
+   ./deploy.sh
+   ```
+   
+   Or manually:
+   ```bash
+   docker-compose up -d --build
+   ```
+
+3. **Access the application:**
+   - 🌐 Frontend: http://localhost:3000
+   - 🔧 Backend API: http://localhost:3001
+   - 🗄️ Database: localhost:5432
+
+### Development Setup
+
+1. **Smart Contracts Setup:**
+   ```bash
+   cd contracts
+   forge install
+   forge build
+   forge test
+   
+   # Deploy contracts
+   forge script script/Deploy.s.sol --rpc-url <your_rpc_url> --private-key <your_private_key>
+   ```
+
+2. **Backend Setup:**
+   ```bash
+   cd backend
+   pnpm install
+   
+   # Set up environment variables
+   cp .env.example .env
+   # Edit .env with your configuration
+   
+   # Start PostgreSQL database
+   docker-compose up postgres -d
+   
+   # Run the backend
+   pnpm start:dev
+   ```
+
+3. **Frontend Setup:**
+   ```bash
+   cd frontend
+   pnpm install
+   
+   # Set up environment variables
+   cp .env.example .env.local
+   # Edit .env.local with your configuration
+   
+   # Start the development server
+   pnpm dev
+   ```
+
+4. **Landing Page Setup:**
+   ```bash
+   cd landing
+   pnpm install
+   pnpm dev
+   ```
+
+## 📁 Project Structure
+
+```
+BasedMetaCitizen/
+├── frontend/          # Next.js application (Organization Portal)
+│   ├── app/          # App Router pages
+│   ├── components/   # Reusable UI components
+│   ├── hooks/        # Custom React hooks
+│   ├── lib/          # Utility functions
+│   └── Dockerfile    # Frontend container
+├── backend/          # NestJS API
+│   ├── src/          # Source code
+│   ├── test/         # Test files
+│   └── Dockerfile    # Backend container
+├── contracts/        # Smart contracts (Foundry)
+│   ├── src/          # Solidity contracts
+│   ├── script/       # Deployment scripts
+│   └── test/         # Contract tests
+├── landing/          # Marketing website
+├── docker-compose.yml # Orchestration
+└── deploy.sh         # Deployment script
 ```
 
 ## 🔧 Core Components
@@ -122,106 +228,20 @@ MetaCitizen supports various types of claims for different compliance requiremen
 - **Sanctions Check**: Anti-money laundering compliance
 - **Custom Claims**: Protocol-specific requirements
 
-### Backend Architecture
+## 🐳 Docker Services
 
-The backend is built with NestJS and provides:
+| Service  | Port | Description |
+|----------|------|-------------|
+| frontend | 3000 | Next.js web application |
+| backend  | 3001 | NestJS API server |
+| postgres | 5432 | PostgreSQL database |
 
-- **User Management**: User registration and profile management
-- **KYC Integration**: SumSub integration for identity verification
-- **Blockchain Interaction**: Smart contract integration and event monitoring
-- **API Gateway**: RESTful APIs for frontend applications
+## 🔧 Environment Variables
 
-### Frontend Applications
-
-#### Organization Portal
-A comprehensive dashboard for organizations to:
-- Manage compliance requirements
-- Monitor user verification status
-- Configure claim requirements
-- Generate API keys for protocol integration
-
-#### Landing Page
-Marketing website showcasing MetaCitizen's features and capabilities.
-
-#### Demo Applications
-Example implementations showing how to integrate MetaCitizen with DeFi protocols.
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js (v18 or later)
-- pnpm
-- PostgreSQL
-- Foundry (for smart contracts)
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-org/metacitizen.git
-cd metacitizen
-```
-
-### 2. Smart Contracts Setup
-
-```bash
-cd contracts
-forge install
-forge build
-forge test
-```
-
-Deploy contracts:
-```bash
-forge script script/Deploy.s.sol --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### 3. Backend Setup
-
-```bash
-cd backend
-pnpm install
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your configuration
-
-# Start PostgreSQL database
-docker-compose up -d
-
-# Run the backend
-pnpm start:dev
-```
-
-### 4. Frontend Setup
-
-```bash
-cd frontend
-pnpm install
-
-# Set up environment variables
-cp .env.example .env.local
-# Edit .env.local with your configuration
-
-# Start the development server
-pnpm dev
-```
-
-### 5. Landing Page Setup
-
-```bash
-cd landing
-pnpm install
-pnpm dev
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-#### Backend (.env)
+### Backend (.env)
 ```env
 # Database
+DATABASE_URL=postgresql://user:password@postgres:5432/metacitizen
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=metacitizen
@@ -238,13 +258,39 @@ JWT_SECRET=your_jwt_secret
 # Blockchain Configuration
 RPC_URL=your_rpc_url
 PRIVATE_KEY=your_private_key
+
+# Server Configuration
+PORT=3001
+NODE_ENV=development
 ```
 
-#### Frontend (.env.local)
+### Frontend (.env.local)
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_USERS_API_URL=http://localhost:3001
 NEXT_PUBLIC_PRIVY_APP_ID=your_privy_app_id
 NEXT_PUBLIC_CONTRACT_ADDRESS=deployed_contract_address
+```
+
+## 📋 Available Commands
+
+```bash
+# Deployment
+./deploy.sh                    # Full deployment
+docker-compose up -d          # Start services
+docker-compose down           # Stop services
+docker-compose logs -f        # View logs
+
+# Development
+pnpm dev                      # Start development (frontend)
+pnpm start:dev               # Start development (backend)
+pnpm build                   # Build for production
+pnpm test                    # Run tests
+
+# Smart Contracts
+forge build                  # Compile contracts
+forge test                   # Run contract tests
+forge script <script>        # Deploy contracts
 ```
 
 ## 📡 API Reference
@@ -306,13 +352,23 @@ cd frontend
 pnpm test
 ```
 
-## 🔒 Security Considerations
+## 🌐 Production Deployment Options
 
-- **Private Key Management**: Never commit private keys to version control
-- **Environment Variables**: Use secure environment variable management
-- **Access Control**: Implement proper role-based access control
-- **Rate Limiting**: Configure appropriate rate limits for API endpoints
-- **Data Encryption**: Encrypt sensitive user data at rest and in transit
+### 1. **VPS/Cloud Server** (Recommended)
+- Use the provided Docker setup
+- Configure reverse proxy (Nginx)
+- Set up SSL certificates
+- Configure environment variables
+
+### 2. **Container Platforms**
+- **Docker Swarm**: Scale horizontally
+- **Kubernetes**: Enterprise-grade orchestration
+- **Cloud Run**: Serverless containers
+
+### 3. **Platform as a Service**
+- **Railway**: Easy Docker deployment
+- **Render**: Git-based deployment
+- **DigitalOcean App Platform**: Managed containers
 
 ## 🤝 Integration Guide
 
@@ -348,6 +404,18 @@ const sdk = new MetaCitizenSDK({
 const isCompliant = await sdk.checkCompliance(userAddress, requiredClaims);
 ```
 
+## 🛡️ Security Considerations
+
+- [ ] **Private Key Management**: Never commit private keys to version control
+- [ ] **Environment Variables**: Use secure environment variable management for secrets
+- [ ] **Access Control**: Implement proper role-based access control
+- [ ] **Rate Limiting**: Configure appropriate rate limits for API endpoints
+- [ ] **Data Encryption**: Encrypt sensitive user data at rest and in transit
+- [ ] **SSL/TLS Certificates**: Set up proper HTTPS certificates
+- [ ] **Firewall Rules**: Configure appropriate network security
+- [ ] **Container Security**: Use non-root user in containers
+- [ ] **Monitoring and Logging**: Set up comprehensive monitoring
+
 ## 🛣️ Roadmap
 
 - [ ] **Q1 2024**: Multi-chain support (Polygon, Arbitrum)
@@ -355,13 +423,19 @@ const isCompliant = await sdk.checkCompliance(userAddress, requiredClaims);
 - [ ] **Q3 2024**: Governance token and DAO implementation
 - [ ] **Q4 2024**: Advanced compliance modules and reporting
 
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
 ## 📚 Documentation
 
 For detailed documentation, visit our [Documentation Portal](https://docs.metacitizen.io).
-
-## 🤝 Contributing
-
-We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## 📄 License
 
@@ -383,4 +457,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ by the MetaCitizen Team**
+**Built with ❤️ by the MetaCitizen Team** 

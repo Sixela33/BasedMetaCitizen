@@ -10,8 +10,6 @@ COPY . .
 
 RUN pnpm install
 
-ENV NEXT_PUBLIC_USERS_API_URL=https://metacitizen.com.ar
-ENV NEXT_PUBLIC_PRIVY_APP_ID=cm8v9esji028d7twhtlzl6v4p
 ENV NEXT_PUBLIC_IGNORE_BUILD_ERROR=true
 
 RUN pnpm build
