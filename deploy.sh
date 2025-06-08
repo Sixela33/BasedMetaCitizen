@@ -8,12 +8,12 @@ echo "🛑 Stopping all containers..."
 sudo docker compose down --remove-orphans
 
 # Remove images for this project to force rebuild
-echo "🗑️ Removing old images..."
-sudo docker rmi $(sudo docker images "basedmetacitizen*" -q) 2>/dev/null || true
+# echo "🗑️ Removing old images..."
+# sudo docker rmi $(sudo docker images "basedmetacitizen*" -q) 2>/dev/null || true
 
 # Remove dangling images and clean build cache
-echo "🧹 Cleaning Docker cache..."
-sudo docker builder prune -f
+# echo "🧹 Cleaning Docker cache..."
+# sudo docker builder prune -f
 
 # Build and start all services with no cache
 echo "📦 Building and starting all services (no cache)..."

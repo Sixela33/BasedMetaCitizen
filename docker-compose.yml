@@ -65,6 +65,10 @@ services:
       dockerfile: Dockerfile
       args:
         - BUILDKIT_INLINE_CACHE=1
+        - NEXT_PUBLIC_PRIVY_APP_ID=${NEXT_PUBLIC_PRIVY_APP_ID}
+        - NEXT_PUBLIC_GATEWAY_URL=${NEXT_PUBLIC_GATEWAY_URL}
+        - PINATA_JWT=${PINATA_JWT}
+        - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
     container_name: meta_citizen_frontend
     env_file:
       - .env
@@ -80,5 +84,25 @@ services:
       - backend
     restart: unless-stopped
 
+  # Caddy Reverse Proxy
+  caddy:
+    image: caddy:latest
+    container_name: meta_citizen_caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./CaddyFile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    environment:
+      - SITE_DOMAIN=https://localhost
+      - API_DOMAIN=https://localhost/api
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
 volumes:
   postgres_data:
+  caddy_data:

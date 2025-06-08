@@ -12,19 +12,15 @@ export class BlockchainService {
     ) {}
 
     async getOrCreateIdentity(userAddress: string, user: User): Promise<string> {
-        console.log("userAddress", userAddress);
         const identity = await this.ethereumService.getIdentity(userAddress)
         if (identity !== "0x0000000000000000000000000000000000000000") {
             return identity
         }
-        console.log("identity",identity)
         const newIdentity = await this.ethereumService.createIdentity(userAddress)
-        console.log("newIdentity",newIdentity)
         const dbIdentity = await this.identityService.createIdentity(user, newIdentity)
-        console.log("dbIdentity",dbIdentity)
 
-        //await this.ethereumService.addClaim(newIdentity, 1, undefined)
-        //console.log("newIdentity",newIdentity)
+        // await this.ethereumService.addClaim(newIdentity, 1, undefined)
+
         return newIdentity
     }
 

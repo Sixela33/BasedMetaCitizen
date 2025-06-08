@@ -56,8 +56,6 @@ export class UserController {
     return this.apiKeysService.deleteApiKey(req.user, id);
   }
 
-
-
   @Get('api-keys/:id')
   getApiKey(@Param('id') id: string) {
     return this.apiKeysService.getApiKey(id);

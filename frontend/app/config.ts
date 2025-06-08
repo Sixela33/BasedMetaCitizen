@@ -4,7 +4,7 @@ const getApiUrl = () => {
   if(process.env.BACKEND_URL) {
     return process.env.NEXT_PUBLIC_BACKEND_URL;
   }
-  return 'http://localhost:8000';
+  return 'http://localhost:8000/api';
 }
 
 export const getConfig = () => {
