@@ -23,7 +23,11 @@ services:
 
   # Backend API
   backend:
-    image: s1x3l4/meta-citizen-backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - BUILDKIT_INLINE_CACHE=1
     container_name: meta_citizen_backend
     env_file:
       - .env
@@ -56,7 +60,15 @@ services:
 
   # Frontend Web App
   frontend:
-    image: s1x3l4/meta-citizen-frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - BUILDKIT_INLINE_CACHE=1
+        - NEXT_PUBLIC_PRIVY_APP_ID=${NEXT_PUBLIC_PRIVY_APP_ID}
+        - NEXT_PUBLIC_GATEWAY_URL=${NEXT_PUBLIC_GATEWAY_URL}
+        - PINATA_JWT=${PINATA_JWT}
+        - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
     container_name: meta_citizen_frontend
     env_file:
       - .env

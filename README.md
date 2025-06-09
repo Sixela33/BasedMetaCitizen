@@ -457,4 +457,22 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## Deploy to docker hub
+
+
+```bash
+
+docker login
+docker build --env-file .env -t s1x3l4/meta-citizen-backend:latest ./backend
+docker build \
+  --build-arg NEXT_PUBLIC_PRIVY_APP_ID=your_value \
+  --build-arg NEXT_PUBLIC_GATEWAY_URL=your_value \
+  --build-arg PINATA_JWT=your_value \
+  --build-arg NEXT_PUBLIC_BACKEND_URL=your_value \
+  -t s1x3l4/meta-citizen-frontend:latest ./frontend
+
+docker push s1x3l4/meta-citizen-backend:latest
+docker push s1x3l4/meta-citizen-frontend:latest
+```
+
 **Built with ❤️ by the MetaCitizen Team** 
